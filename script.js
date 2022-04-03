@@ -104,6 +104,7 @@ window.onload = function(){
     const margin_bottom = "2vh";
     const none = "none";
     const show = "block";
+    var score = 0;
     let hr = document.createElement("hr");
     let row = document.createElement("div");
     let row1 = document.createElement("div");
@@ -175,47 +176,66 @@ window.onload = function(){
     }
     var line = document.createElement("h5");
     row1.append(line);
-    line.textContent = "None"
+    line.textContent = "None";
     function newQuestion(){
+        if(question_counter < quiz_body.length){
            question_set = quiz_body[question_counter++];
-           
-           for(const [key,value] of Object.entries(answer))
-            // answer[i].textContent =
+           h3.textContent = question_counter+": " + question_set.question;
+           var innercount = 0;
+            for(const [key,value] of Object.entries(question_set.answers)){
 
-           console.log(question_set.a);
+                answers[innercount++].textContent = value;
+            }
+        }
+
+
     }
     function checkAns(event){
-        if(event.target.getAttribute("id") === quiz_body[question_counter].ans){
-            line.textContent = "Correct";
-        }
-        else{
-            line.textContent = "Incorrect";
+        if(question_counter-1 < quiz_body.length){
+            if(event.target.getAttribute("id") === quiz_body[question_counter-1].ans){
+                line.textContent = "Correct";
+                console.log("Correct");
+            }
+            else{
+                line.textContent = "Incorrect";
+                console.log("Incorrect");
+            }
         }
 
+
     }
-    
-    var answer =  document.querySelectorAll(".answer");
+    var answers = document.querySelectorAll(".answer");
     button.addEventListener("click", function(){
+
         var quiz = setInterval(function(){
             if(counter === 60){
                 newQuestion();
+                answers.forEach(answer => {
+                    answer.addEventListener("click",function(event) {
+                        event.stopPropagation();
+
+                        checkAns(event);
+                        newQuestion();
+                    });
+                    
+                });
+
+
                 outer_container.style.display = none;
                 quiz_container.style.display = show;
             }
-            answer.forEach(element => {
-                element.addEventListener("click",function(event){
-                    checkAns(event);
-                    newQuestion();
-                });
-                
-            }); 
+
+
             timer.textContent="Time: "+counter--;
-            if(counter === -1){
-                console.log(counter === 1111111);
+            console.log(question_counter);
+            if(counter === -1 || question_counter >= 10){
+                alert("pass");
                 quiz_container.style.display = none;
                 outer_container.style.display = show;
                 clearInterval(quiz);
                 counter = 60;
+                question_counter = 0;
+                timer.textContent="Time: "+0;
             }
         },1000);
     }); 
