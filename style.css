@@ -21,3 +21,31 @@ html, body{
     padding-left: 10vw;
     padding-right: 10vw;
 }
+.scoreboard-link{
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    margin-right: 1rem;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+a{
+    color: var(--bs-white-text) !important;
+    text-decoration: none !important;
+}
+a:hover{
+    color:purple !important;
+}
+#time-counter{
+    color:#fff;
+
+}
+.q-title{
+    font-weight: 400;
+}
+.answer{
+    background-color: #5135ca;
+    color:var(--bs-white-text);
+}
+.ans{
+    list-style-type:none;
+}
