@@ -1,0 +1,23 @@
+/* declaring global variable  */
+:root{
+    --discord-gray:#19191b;
+    --bs-white-text:#fff;
+}
+
+/* main body setting */
+html, body{
+    margin: 0;
+    padding: 0;
+    background-color: var(--discord-gray) !important;
+}
+/* container settings */
+.container{
+    margin-top: 10vh!important;
+    background-color: var(--discord-gray);
+    color:var(--bs-white-text);
+}
+/* row settings */
+.row {
+    padding-left: 10vw;
+    padding-right: 10vw;
+}
