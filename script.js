@@ -283,7 +283,25 @@ window.onload = function(){
         } 
         return array;
 
-    } 
+    }
+
+    //selection reverse sort git 
+    function sortByscore(array){
+        let i;
+        for(i = array.length-1; i> -1; i--){
+            let largest = array[i];
+            for (let j = i-1; j > i; j--) {
+                if(array[j].score > largest.score){
+                    largest = array[j];                   
+                }
+                var temp = largest;
+                largest = array[i];
+                array = temp;
+                
+            }
+        }
+        return ;
+    }
     // save user score
     function saveScore(namestore,scorestore){
         var scores = {name:namestore,score:scorestore};
@@ -291,14 +309,14 @@ window.onload = function(){
             var firstscore = {name:namestore,score:scorestore};
             localStorage.setItem("scores",JSON.stringify(firstscore));
         }
-        var storedScores = JSON.parse(localStorage.getItem("scores"));
+        var storedScores = [];
+        storedScores.push(JSON.parse(localStorage.getItem("scores")));
         storedScores.push(scores);
         localStorage.setItem("scores",JSON.stringify(storedScores));
         console.log(localStorage.getItem("scores"));
     }
     // show the scoreboard
     function showScoreboard(){
-        
         //show if localstorage not null
         if(localStorage.getItem("scores") !== null){
             scoreboard_status = true;
