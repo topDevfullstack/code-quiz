@@ -111,9 +111,25 @@ window.onload = function(){
     
     
  
-    // navbar element
+    // Session of navbar element
     let timer = document.querySelector("#time-counter");
-    
+    let scoreboard_status = false;
+    let scoreboard_link = document.querySelector("#show-scoreboard");
+    //scoreboard_link got clicked either open/close scoreboard
+    scoreboard_link.addEventListener("click",function(){
+        if(!scoreboard_status){
+            showScoreboard();
+            scoreboard_link.textContent = "click here to return";
+        }
+        else{
+            scoreboard.style.display = none;
+            scoreboard_link.textContent = "View Scoreboard";
+            scoreboard_body = document.querySelector("tbody");
+            scoreboard_body.remove();
+            scoreboard_status = false;
+        }
+
+    });
     
 
     //section of Menu screen container
@@ -229,6 +245,33 @@ window.onload = function(){
         outer_container.style.display = show;
     });
 
+    //JQuery is much more convenient :(
+    //scoreboard session
+    let scoreboard = document.querySelector("#scoreboard-container");
+    scoreboard.style.display = none;
+    let scoreboard_table = document.createElement("table");
+    let scoreboard_head = document.createElement("thead");
+    let tr_head = document.createElement("tr");
+    let th_score = document.createElement("th");
+    let th_name = document.createElement("th");
+    let th_rank = document.createElement("th");
+    scoreboard.append(scoreboard_table);
+    scoreboard_table.classList.add("table");
+    scoreboard_table.classList.add("table-dark");
+    scoreboard_table.classList.add("table-striped");
+    scoreboard_table.append(scoreboard_head);
+    scoreboard_head.append(tr_head);
+    tr_head.append(th_rank);
+    th_rank.textContent = "Rank";
+    tr_head.append(th_name);
+    th_name.textContent = "Name";
+    tr_head.append(th_score);
+    th_score.textContent = "Score";
+
+
+
+    
+
 
     //randomise array
     function randomiseArray(array) { 
@@ -241,7 +284,7 @@ window.onload = function(){
         return array;
 
     } 
-    
+    // save user score
     function saveScore(namestore,scorestore){
         var scores = {name:namestore,score:scorestore};
         if(localStorage.getItem("scores") === null){
@@ -253,7 +296,33 @@ window.onload = function(){
         localStorage.setItem("scores",JSON.stringify(storedScores));
         console.log(localStorage.getItem("scores"));
     }
+    // show the scoreboard
+    function showScoreboard(){
+        scoreboard_status = true;
+        //show if localstorage not null
+        if(localStorage.getItem("scores") !== null){
+            let scoreboard_body = document.createElement("tbody");
+            scoreboard_table.append(scoreboard_body);
+            var scores =  JSON.parse(localStorage.getItem("scores"));
+            for(i = 0; i< scores.length; i++){
+                const name = scores[i].name;
+                const score = scores[i].score;
+                let tr_data = document.createElement("tr");
+                let td_rank = document.createElement("td");
+                let td_name = document.createElement("td");
+                let td_score = document.createElement("td");
+                scoreboard_body.append(tr_data);
+                tr_data.append(td_rank);
+                td_rank.textContent = i+1;
+                tr_data.append(td_name);
+                td_name.textContent = name;
+                tr_data.append(td_score);
+                td_score.textContent = score;
 
+            }
+            scoreboard.style.display = show;
+        }
+    }
 
 
 
