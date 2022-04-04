@@ -298,9 +298,10 @@ window.onload = function(){
     }
     // show the scoreboard
     function showScoreboard(){
-        scoreboard_status = true;
+        
         //show if localstorage not null
         if(localStorage.getItem("scores") !== null){
+            scoreboard_status = true;
             let scoreboard_body = document.createElement("tbody");
             scoreboard_table.append(scoreboard_body);
             var scores =  JSON.parse(localStorage.getItem("scores"));
@@ -321,6 +322,9 @@ window.onload = function(){
 
             }
             scoreboard.style.display = show;
+        }
+        else{
+            alert("There no scores stored");
         }
     }
 
@@ -355,6 +359,7 @@ window.onload = function(){
 
         var quiz = setInterval(function(){
             if(counter === 60){
+                
                 quiz_body = randomiseArray(quiz_body);
                 newQuestion();
                 console.log("log " +event_lis_counter);
@@ -370,7 +375,7 @@ window.onload = function(){
                     event_lis_counter += 1;
                 }
 
-
+                scoreboard_link.style.display = none;
                 outer_container.style.display = none;
                 quiz_container.style.display = show;
             }
@@ -383,6 +388,7 @@ window.onload = function(){
                 
                 quiz_container.style.display = none;
                 after_container.style.display = show;
+                scoreboard_link.style.display = show;
                 clearInterval(quiz);
                 counter = 60;
                 question_counter = 0;
