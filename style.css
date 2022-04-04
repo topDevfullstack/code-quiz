@@ -21,6 +21,7 @@ html, body{
     padding-left: 10vw;
     padding-right: 10vw;
 }
+/* scoreboard link setting */
 .scoreboard-link{
     padding-top: .3125rem;
     padding-bottom: .3125rem;
@@ -28,27 +29,34 @@ html, body{
     font-size: 1.1rem;
     white-space: nowrap;
 }
+/* link setting */
 a{
     color: var(--bs-white-text) !important;
     text-decoration: none !important;
 }
+/* link hover  */
 a:hover{
     color:purple !important;
 }
+/* time counter setting */
 #time-counter{
     color:#fff;
 
 }
+/* question title */
 .q-title{
     font-weight: 400;
 }
+/* answer */
 .answer{
     background-color: #5135ca;
     color:var(--bs-white-text);
 }
+/* li answer style */
 .ans{
     list-style-type:none;
 }
+/* row setting */
 .row *{
     margin-bottom: 2.5%;
 }
