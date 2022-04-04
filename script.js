@@ -92,31 +92,9 @@ window.onload = function(){
         d:`Visual Studio`},
         ans:"b"
 
-    },
-    // function shuffleArray(array) {
-    //     let curId = array.length;
-    //     // There remain elements to shuffle
-    //     while (0 !== curId) {
-    //       // Pick a remaining element
-    //       let randId = Math.floor(Math.random() * curId);
-    //       curId -= 1;
-    //       // Swap it with the current element.
-    //       let tmp = array[curId];
-    //       array[curId] = array[randId];
-    //       array[randId] = tmp;
-    //     }
-    //     return array;
-    //   }
-    //   // Usage of shuffle
-    //   let arr = [1, 2, 3, 4, 5];
-    //   arr = shuffleArray(arr);
-    //   console.log(arr);
-
-
-
-
-]
-    var outer_container = document.querySelector("#b4-container");
+    }
+    ]
+    
     const center = "text-center";
     const margin_bottom = "2vh";
     const none = "none";
@@ -125,21 +103,27 @@ window.onload = function(){
     var event_lis_counter = 0;
     var last_question = false;
     let hr = document.createElement("hr");
-    let row = document.createElement("div");
-    let row1 = document.createElement("div");
-    let innerrow = document.createElement("div");
-    let ul = document.createElement("ul");
-    let h2 = document.createElement("h2");
-    let h3 = document.createElement("h3");
-    let p = document.createElement("p");
-    let column = document.createElement("div");
-    let button = document.createElement("button");
-    let timer = document.querySelector("#time-counter");
-    let quiz_container = document.querySelector("#quiz-container");
     var question_counter = 0;
+   
+    
+ 
+    
+    
+    
+ 
+    // navbar element
+    let timer = document.querySelector("#time-counter");
+    
+    
 
     //section of Menu screen container
     var counter = 60;
+    var outer_container = document.querySelector("#b4-container");
+    let row = document.createElement("div");
+    let innerrow = document.createElement("div");
+    let h2 = document.createElement("h2");
+    let p = document.createElement("p");
+    let button = document.createElement("button");
     row.classList.add("row");
     row.classList.add("align-items-center");
     row.classList.add("justify-content-sm-center");
@@ -170,6 +154,11 @@ window.onload = function(){
     row.append(button);
 
     //Section for quiz container
+    let quiz_container = document.querySelector("#quiz-container");
+    let row1 = document.createElement("div");
+    let column = document.createElement("div");
+    let h3 = document.createElement("h3");
+    let ul = document.createElement("ul");
     quiz_container.setAttribute("id","quiz-con");
     quiz_container.style.display = none;
     quiz_container.append(row1);
@@ -206,6 +195,71 @@ window.onload = function(){
 
 
     }
+    
+    // Session of after game 
+    let after_container = document.querySelector("#after-container");
+    let after_row = document.createElement("div");
+    let over_heading = document.createElement("h4");
+    let over_p = document.createElement("p");
+    let submit_form = document.createElement("form");
+    let initials_inputs = document.createElement("input");
+    let submit_button = document.createElement("input");
+    let lebal = document.createElement("p");
+    after_container.append(after_row);
+    after_container.style.display = none;
+    after_row.classList.add("row");
+    after_row.classList.add("justify-content-md-center");
+    after_row.append(over_heading);
+    over_heading.textContent = "All done!!!";
+    after_row.append(over_p);
+    after_row.append(submit_form);
+    submit_form.append(lebal);
+    lebal.textContent = "Enter initials: ";
+    submit_form.append(initials_inputs);
+    initials_inputs.id = "initials-input";
+    submit_form.append(submit_button);
+    submit_button.textContent = "submit";
+    submit_button.type = "submit";
+    submit_form.addEventListener("submit",function(event){
+        console.log(initials_inputs.value);
+        saveScore(initials_inputs.value,score);
+        alert();
+        event.preventDefault();
+        after_container.style.display = none;
+        outer_container.style.display = show;
+    });
+
+
+    //randomise array
+    function randomiseArray(array) { 
+        for (var i = array.length - 1; i > 0; i--) {  
+            var j = Math.floor(Math.random() * (i + 1)); 
+            var temp = array[i]; 
+            array[i] = array[j]; 
+            array[j] = temp; 
+        } 
+        return array;
+
+    } 
+    
+    function saveScore(namestore,scorestore){
+        var scores = {name:namestore,score:scorestore};
+        if(localStorage.getItem("scores") === null){
+            var firstscore = {name:namestore,score:scorestore};
+            localStorage.setItem("scores",JSON.stringify(firstscore));
+        }
+        var storedScores = JSON.parse(localStorage.getItem("scores"));
+        storedScores.push(scores);
+        localStorage.setItem("scores",JSON.stringify(storedScores));
+        console.log(localStorage.getItem("scores"));
+    }
+
+
+
+
+
+
+    //check answer 
     function checkAns(event){
         if(question_counter-1 < quiz_body.length && !last_question){
             if(question_counter === 10){
@@ -227,10 +281,12 @@ window.onload = function(){
 
 
     var answers = document.querySelectorAll(".answer");
+    //Button click and quiz starts
     button.addEventListener("click", function(){
 
         var quiz = setInterval(function(){
             if(counter === 60){
+                quiz_body = randomiseArray(quiz_body);
                 newQuestion();
                 console.log("log " +event_lis_counter);
                 if(event_lis_counter === 0){
@@ -257,11 +313,12 @@ window.onload = function(){
                 alert("pass");
                 
                 quiz_container.style.display = none;
-                outer_container.style.display = show;
+                after_container.style.display = show;
                 clearInterval(quiz);
                 counter = 60;
                 question_counter = 0;
                 timer.textContent="Time: "+0;
+                over_p.textContent = "Your Final score is "+score + " out of 10";
             }
         },1000);
     }); 

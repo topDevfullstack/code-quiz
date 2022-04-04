@@ -49,3 +49,6 @@ a:hover{
 .ans{
     list-style-type:none;
 }
+.row *{
+    margin-bottom: 2.5%;
+}
