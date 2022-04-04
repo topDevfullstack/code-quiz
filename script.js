@@ -93,7 +93,24 @@ window.onload = function(){
         ans:"b"
 
     },
-    
+    // function shuffleArray(array) {
+    //     let curId = array.length;
+    //     // There remain elements to shuffle
+    //     while (0 !== curId) {
+    //       // Pick a remaining element
+    //       let randId = Math.floor(Math.random() * curId);
+    //       curId -= 1;
+    //       // Swap it with the current element.
+    //       let tmp = array[curId];
+    //       array[curId] = array[randId];
+    //       array[randId] = tmp;
+    //     }
+    //     return array;
+    //   }
+    //   // Usage of shuffle
+    //   let arr = [1, 2, 3, 4, 5];
+    //   arr = shuffleArray(arr);
+    //   console.log(arr);
 
 
 
@@ -105,6 +122,8 @@ window.onload = function(){
     const none = "none";
     const show = "block";
     var score = 0;
+    var event_lis_counter = 0;
+    var last_question = false;
     let hr = document.createElement("hr");
     let row = document.createElement("div");
     let row1 = document.createElement("div");
@@ -145,7 +164,6 @@ window.onload = function(){
     button.classList.add("col-md-6");
     button.classList.add("col-sm-8");
     button.classList.add("col-xs-8");
-    // debugger;
     button.setAttribute("id","start-quiz");
     button.setAttribute("button","button");
     button.textContent = "Start";
@@ -170,13 +188,11 @@ window.onload = function(){
         ans0.style.marginBottom = '4px';
         a.setAttribute("class","answer");
         a.setAttribute("id",String.fromCharCode(97+index));
-        a.style.borderRadius = ".2rem";
-        a.textContent = String.fromCharCode(65+index)+": answer"+index;
-        
+        a.style.borderRadius = ".2rem";  
     }
-    var line = document.createElement("h5");
-    row1.append(line);
-    line.textContent = "None";
+    var response = document.createElement("h5");
+    row1.append(response);
+    response.textContent = "None";
     function newQuestion(){
         if(question_counter < quiz_body.length){
            question_set = quiz_body[question_counter++];
@@ -184,41 +200,50 @@ window.onload = function(){
            var innercount = 0;
             for(const [key,value] of Object.entries(question_set.answers)){
 
-                answers[innercount++].textContent = value;
+                answers[innercount].textContent = String.fromCharCode(65+(innercount++))+": "+value;
             }
         }
 
 
     }
     function checkAns(event){
-        if(question_counter-1 < quiz_body.length){
+        if(question_counter-1 < quiz_body.length && !last_question){
+            if(question_counter === 10){
+                last_question = true;
+            }
             if(event.target.getAttribute("id") === quiz_body[question_counter-1].ans){
-                line.textContent = "Correct";
+                response.textContent = "Correct";
                 console.log("Correct");
+                score += 1;
             }
             else{
-                line.textContent = "Incorrect";
+                response.textContent = "Incorrect";
                 console.log("Incorrect");
             }
         }
 
 
     }
+
+
     var answers = document.querySelectorAll(".answer");
     button.addEventListener("click", function(){
 
         var quiz = setInterval(function(){
             if(counter === 60){
                 newQuestion();
-                answers.forEach(answer => {
-                    answer.addEventListener("click",function(event) {
-                        event.stopPropagation();
-
-                        checkAns(event);
-                        newQuestion();
+                console.log("log " +event_lis_counter);
+                if(event_lis_counter === 0){
+                    answers.forEach(answer => {
+                        answer.addEventListener("click", function(event){
+                            event.stopPropagation();
+                            checkAns(event);
+                            newQuestion();
+                        });
+                        
                     });
-                    
-                });
+                    event_lis_counter += 1;
+                }
 
 
                 outer_container.style.display = none;
@@ -228,8 +253,9 @@ window.onload = function(){
 
             timer.textContent="Time: "+counter--;
             console.log(question_counter);
-            if(counter === -1 || question_counter >= 10){
+            if(counter === -1 || (question_counter === 10 && last_question === true)){
                 alert("pass");
+                
                 quiz_container.style.display = none;
                 outer_container.style.display = show;
                 clearInterval(quiz);
