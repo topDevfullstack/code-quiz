@@ -2,8 +2,6 @@
 
 //run code when the whole page has loaded.
 window.onload = function(){
-
-
     //declaring components
     var quiz_body = [{
         question: "Which ASP command sends a web page to another web page but keeps the URL the same?",
@@ -184,9 +182,9 @@ window.onload = function(){
         a.attr("id",String.fromCharCode(97+index));
         a.css("border-radius",".2rem");  
     }
-    var response = $("<h5/>");
+    var response = document.createElement("h5");
     row1.append(response);
-    // response.textContent = "None";
+    response.textContent = "None";
     function newQuestion(){
         if(question_counter < quiz_body.length){
            question_set = quiz_body[question_counter++];
@@ -271,32 +269,35 @@ window.onload = function(){
 
     }
 
-    //selection sort
+    //selection reverse sort git 
     function sortByscore(array){
-        for (var i = 1; i < array.length; i++) {
-            var key = array[i];
-            var j;
-            for (j = i; j > 0 && key.score < array[j-1].score ; j--) {
-                array[j] = array[j-1];
+        let i;
+        for(i = array.length-1; i> -1; i--){
+            let largest = array[i];
+            for (let j = i-1; j > i; j--) {
+                if(array[j].score > largest.score){
+                    largest = array[j];                   
+                }
+                var temp = largest;
+                largest = array[i];
+                array = temp;
+                
             }
-            array[j] = key;     
         }
-        console.log(JSON.stringify(array));
-        return array;
+        return ;
     }
-
     // save user score
     function saveScore(namestore,scorestore){
         var scores = {name:namestore,score:scorestore};
         if(localStorage.getItem("scores") === null){
-            var firstscore = [{name:namestore,score:scorestore}];
+            var firstscore = {name:namestore,score:scorestore};
             localStorage.setItem("scores",JSON.stringify(firstscore));
         }
         else{
-        var storedScores = JSON.parse(localStorage.getItem("scores"));
+        var storedScores = [];
+        storedScores.push(JSON.parse(localStorage.getItem("scores")));
         storedScores.push(scores);
-        
-        localStorage.setItem("scores",JSON.stringify(sortByscore(storedScores)));
+        localStorage.setItem("scores",JSON.stringify(storedScores));
         console.log(JSON.stringify(localStorage.getItem("scores")));
         }
     }
@@ -308,8 +309,7 @@ window.onload = function(){
             let scoreboard_body = $("<tbody/>");
             scoreboard_table.append(scoreboard_body);
             var scores =  JSON.parse(localStorage.getItem("scores"));
-            let rank = 1;
-            for(i = scores.length-1; i>-1 ; i--){
+            for(i = 0; i< scores.length; i++){
                 const name = scores[i].name;
                 const score = scores[i].score;
                 let tr_data = $("<tr/>");
@@ -318,7 +318,7 @@ window.onload = function(){
                 let td_score = $("<td/>");
                 scoreboard_body.append(tr_data);
                 tr_data.append(td_rank);
-                td_rank.text(rank++);
+                td_rank.text(i+1);
                 tr_data.append(td_name);
                 td_name.text(name);
                 tr_data.append(td_score);
@@ -343,12 +343,12 @@ window.onload = function(){
                 last_question = true;
             }
             if(event.target.getAttribute("id") === quiz_body[question_counter-1].ans){
-                response.text("Correct");
+                response.textContent = "Correct";
                 console.log("Correct");
                 score += 1;
             }
             else{
-                response.text("Incorrect");
+                response.textContent = "Incorrect";
                 console.log("Incorrect");
             }
         }
@@ -382,7 +382,6 @@ window.onload = function(){
                 scoreboard_link.css("display",none);
                 outer_container.css("display",none);
                 quiz_container.css("display",show);
-                scoreboard.css("display",none);
             }
 
 
