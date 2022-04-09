@@ -140,29 +140,17 @@ window.onload = function(){
     let p = $("<p/>");
     let button = $("<button/>");
     row.attr("class","row align-items-center justify-content-sm-center justify-content-md-center justify-content-lg-center");
-    // row.classList.add("");
-    // row.classList.add("");
-    // row.classList.add("");
-    // row.classList.add("");
     outer_container.append(row);
     h2.text("Coding Quiz Challange");
     h2.addClass(center);
     row.append(h2);
     innerrow.attr("class","row justify-content-center col-md-12");
-    // innerrow.classList.add("");
-    // innerrow.classList.add("");
     p.attr("class","mb-5 col-md-8");
     p.text("This quiz will test your knowledge of web development. Check how much you know about web development and your level of acknowledgement. You will have 60 seconds to complete all question. You can finish the game by finishing all the questions or when the timer turns to 0. ");
     p.addClass(center);
-    // p.classList.add();
     innerrow.append(p);
     row.append(innerrow);
     button.attr("class","btn btn-primary btn-sm col-md-6 col-sm-8 col-xs-8");
-    // button.classList.add("");
-    // button.classList.add("");
-    // button.classList.add("");
-    // button.classList.add("");
-    // button.classList.add("");
     button.attr("id","start-quiz");
     button.attr("button","button");
     button.text("Start");
@@ -170,29 +158,29 @@ window.onload = function(){
 
     //Section for quiz container
     let quiz_container = $("#quiz-container");
-    let row1 = document.createElement("div");
-    let column = document.createElement("div");
-    let h3 = document.createElement("h3");
-    let ul = document.createElement("ul");
+    let row1 = $("<div/>");
+    let column = $("<div/>");
+    let h3 = $("<h3/>");
+    let ul = $("<ul/>");
     quiz_container.attr("id","quiz-con");
     quiz_container.css("display",none);
     quiz_container.append(row1);
-    row1.classList.add("row");
-    row1.classList.add("justify-content-md-left");
+    row1.addClass("row");
+    row1.addClass("justify-content-md-left");
     row1.append(column);
     column.append(h3);
-    h3.textContent = "This is question 1";
+    h3.text("This is question 1");
     row1.append(ul);
     for (let index = 0; index < 4; index++) {
-        let ans0 = document.createElement("li");
-        let a = document.createElement("a");
+        let ans0 = $("<li/>");
+        let a = $("<a/>");
         ul.append(ans0);
         ans0.append(a);
-        ans0.style.listStyleType = none;
-        ans0.style.marginBottom = '4px';
-        a.setAttribute("class","answer");
-        a.setAttribute("id",String.fromCharCode(97+index));
-        a.style.borderRadius = ".2rem";  
+        ans0.css("list-style-type",none);
+        ans0.css("margin-bottom",'4px');
+        a.attr("class","answer");
+        a.attr("id",String.fromCharCode(97+index));
+        a.css("border-radius",".2rem");  
     }
     var response = document.createElement("h5");
     row1.append(response);
@@ -200,7 +188,7 @@ window.onload = function(){
     function newQuestion(){
         if(question_counter < quiz_body.length){
            question_set = quiz_body[question_counter++];
-           h3.textContent = question_counter+": " + question_set.question;
+           h3.text(question_counter+": " + question_set.question);
            var innercount = 0;
             for(const [key,value] of Object.entries(question_set.answers)){
 
@@ -255,8 +243,6 @@ window.onload = function(){
     let th_rank = $("<th/>");
     scoreboard.append(scoreboard_table);
     scoreboard_table.attr("class","table table-dark table-striped");
-    // scoreboard_table.classList.add("table-dark");
-    // scoreboard_table.classList.add("table-striped");
     scoreboard_table.append(scoreboard_head);
     scoreboard_head.append(tr_head);
     tr_head.append(th_rank);
@@ -401,9 +387,7 @@ window.onload = function(){
 
             timer.text("Time: "+counter--);
             console.log(question_counter);
-            if(counter === -1 || (question_counter === 10 && last_question === true)){
-                alert("pass");
-                
+            if(counter === -1 || (question_counter === 10 && last_question === true)){                
                 quiz_container.css("display",none);
                 after_container.css("display",show);
                 scoreboard_link.css("display",show);
