@@ -197,7 +197,6 @@ window.onload = function(){
     }
     var response = document.createElement("h5");
     row1.append(response);
-    response.textContent = "None";
     function newQuestion(){
         if(question_counter < quiz_body.length){
            question_set = quiz_body[question_counter++];
@@ -239,7 +238,6 @@ window.onload = function(){
     submit_form.addEventListener("submit",function(event){
         console.log(initials_inputs.value);
         saveScore(initials_inputs.value,score);
-        alert();
         event.preventDefault();
         after_container.style.display = none;
         outer_container.style.display = show;
@@ -285,35 +283,33 @@ window.onload = function(){
 
     }
 
-    //selection reverse sort git 
+    //selection sort
     function sortByscore(array){
-        let i;
-        for(i = array.length-1; i> -1; i--){
-            let largest = array[i];
-            for (let j = i-1; j > i; j--) {
-                if(array[j].score > largest.score){
-                    largest = array[j];                   
-                }
-                var temp = largest;
-                largest = array[i];
-                array = temp;
-                
+        for (var i = 1; i < array.length; i++) {
+            var key = array[i];
+            var j;
+            for (j = i; j > 0 && key.score < array[j-1].score ; j--) {
+                array[j] = array[j-1];
             }
+            array[j] = key;     
         }
-        return ;
+        console.log(JSON.stringify(array));
+        return array;
     }
     // save user score
     function saveScore(namestore,scorestore){
         var scores = {name:namestore,score:scorestore};
         if(localStorage.getItem("scores") === null){
-            var firstscore = {name:namestore,score:scorestore};
+            var firstscore = [{name:namestore,score:scorestore}];
             localStorage.setItem("scores",JSON.stringify(firstscore));
         }
-        var storedScores = [];
-        storedScores.push(JSON.parse(localStorage.getItem("scores")));
+        else{
+        var storedScores = JSON.parse(localStorage.getItem("scores"));
         storedScores.push(scores);
-        localStorage.setItem("scores",JSON.stringify(storedScores));
-        console.log(localStorage.getItem("scores"));
+        
+        localStorage.setItem("scores",JSON.stringify(sortByscore(storedScores)));
+        console.log(JSON.stringify(localStorage.getItem("scores")));
+        }
     }
     // show the scoreboard
     function showScoreboard(){
@@ -392,8 +388,9 @@ window.onload = function(){
                     });
                     event_lis_counter += 1;
                 }
-
+                scoreboard.style.display = none;
                 scoreboard_link.style.display = none;
+                scoreboard_link.textContent = "View Scoreboard";
                 outer_container.style.display = none;
                 quiz_container.style.display = show;
             }
@@ -402,7 +399,6 @@ window.onload = function(){
             timer.textContent="Time: "+counter--;
             console.log(question_counter);
             if(counter === -1 || (question_counter === 10 && last_question === true)){
-                alert("pass");
                 
                 quiz_container.style.display = none;
                 after_container.style.display = show;
