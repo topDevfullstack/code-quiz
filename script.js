@@ -102,6 +102,7 @@ window.onload = function(){
     var score = 0;
     var event_lis_counter = 0;
     var last_question = false;
+    let hr = document.createElement("hr");
     var question_counter = 0;
    
     
@@ -111,19 +112,19 @@ window.onload = function(){
     
  
     // Session of navbar element
-    let timer = $("#time-counter");
+    let timer = document.querySelector("#time-counter");
     let scoreboard_status = false;
-    let scoreboard_link = $("#show-scoreboard");
+    let scoreboard_link = document.querySelector("#show-scoreboard");
     //scoreboard_link got clicked either open/close scoreboard
-    scoreboard_link.click(function(){
+    scoreboard_link.addEventListener("click",function(){
         if(!scoreboard_status){
             showScoreboard();
-            scoreboard_link.text("click here to return");
+            scoreboard_link.textContent = "click here to return";
         }
         else{
-            scoreboard.css("display",none);
-            scoreboard_link.text("View Scoreboard");
-            scoreboard_body = $("tbody");
+            scoreboard.style.display = none;
+            scoreboard_link.textContent = "View Scoreboard";
+            scoreboard_body = document.querySelector("tbody");
             scoreboard_body.remove();
             scoreboard_status = false;
         }
@@ -133,49 +134,49 @@ window.onload = function(){
 
     //section of Menu screen container
     var counter = 60;
-    var outer_container = $("#b4-container");
-    let row = $("<div/>");
-    let innerrow = $("<div/>");
-    let h2 = $("<h2/>");
-    let p = $("<p/>");
-    let button = $("<button/>");
-    row.attr("class","row align-items-center justify-content-sm-center justify-content-md-center justify-content-lg-center");
-    // row.classList.add("");
-    // row.classList.add("");
-    // row.classList.add("");
-    // row.classList.add("");
+    var outer_container = document.querySelector("#b4-container");
+    let row = document.createElement("div");
+    let innerrow = document.createElement("div");
+    let h2 = document.createElement("h2");
+    let p = document.createElement("p");
+    let button = document.createElement("button");
+    row.classList.add("row");
+    row.classList.add("align-items-center");
+    row.classList.add("justify-content-sm-center");
+    row.classList.add("justify-content-md-center");
+    row.classList.add("justify-content-lg-center");
     outer_container.append(row);
-    h2.text("Coding Quiz Challange");
-    h2.addClass(center);
+    h2.textContent="Coding Quiz Challange";
+    h2.classList.add(center);
     row.append(h2);
-    innerrow.attr("class","row justify-content-center col-md-12");
-    // innerrow.classList.add("");
-    // innerrow.classList.add("");
-    p.attr("class","mb-5 col-md-8");
-    p.text("This quiz will test your knowledge of web development. Check how much you know about web development and your level of acknowledgement. You will have 60 seconds to complete all question. You can finish the game by finishing all the questions or when the timer turns to 0. ");
-    p.addClass(center);
-    // p.classList.add();
+    innerrow.classList.add("row");
+    innerrow.classList.add("justify-content-center");
+    innerrow.classList.add("col-md-12");
+    p.classList.add("mb-5");
+    p.textContent = "This quiz will test your knowledge of web development. Check how much you know about web development and your level of acknowledgement. You will have 60 seconds to complete all question. You can finish the game by finishing all the questions or when the timer turns to 0. ";
+    p.classList.add(center);
+    p.classList.add("col-md-8");
     innerrow.append(p);
     row.append(innerrow);
-    button.attr("class","btn btn-primary btn-sm col-md-6 col-sm-8 col-xs-8");
-    // button.classList.add("");
-    // button.classList.add("");
-    // button.classList.add("");
-    // button.classList.add("");
-    // button.classList.add("");
-    button.attr("id","start-quiz");
-    button.attr("button","button");
-    button.text("Start");
+    button.classList.add("btn");
+    button.classList.add("btn-primary");
+    button.classList.add("btn-sm");
+    button.classList.add("col-md-6");
+    button.classList.add("col-sm-8");
+    button.classList.add("col-xs-8");
+    button.setAttribute("id","start-quiz");
+    button.setAttribute("button","button");
+    button.textContent = "Start";
     row.append(button);
 
     //Section for quiz container
-    let quiz_container = $("#quiz-container");
+    let quiz_container = document.querySelector("#quiz-container");
     let row1 = document.createElement("div");
     let column = document.createElement("div");
     let h3 = document.createElement("h3");
     let ul = document.createElement("ul");
-    quiz_container.attr("id","quiz-con");
-    quiz_container.css("display",none);
+    quiz_container.setAttribute("id","quiz-con");
+    quiz_container.style.display = none;
     quiz_container.append(row1);
     row1.classList.add("row");
     row1.classList.add("justify-content-md-left");
@@ -212,59 +213,60 @@ window.onload = function(){
     }
     
     // Session of after game 
-    let after_container = $("#after-container");
-    let after_row = $("<div/>");
-    let over_heading = $("<h4/>");
-    let over_p = $("<p/>");
-    let submit_form = $("<form/>");
-    let initials_inputs = $("<input/>");
-    let submit_button = $("<input/>");
-    let lebal = $("<p/>");
+    let after_container = document.querySelector("#after-container");
+    let after_row = document.createElement("div");
+    let over_heading = document.createElement("h4");
+    let over_p = document.createElement("p");
+    let submit_form = document.createElement("form");
+    let initials_inputs = document.createElement("input");
+    let submit_button = document.createElement("input");
+    let lebal = document.createElement("p");
     after_container.append(after_row);
-    after_container.css("display",none);
-    after_row.attr("class","row justify-content-md-center");
-    // after_row.classList.add(");
+    after_container.style.display = none;
+    after_row.classList.add("row");
+    after_row.classList.add("justify-content-md-center");
     after_row.append(over_heading);
-    over_heading.text("All done!!!");
+    over_heading.textContent = "All done!!!";
     after_row.append(over_p);
     after_row.append(submit_form);
     submit_form.append(lebal);
-    lebal.text("Enter initials: ");
+    lebal.textContent = "Enter initials: ";
     submit_form.append(initials_inputs);
-    initials_inputs.attr("id","initials-input");
+    initials_inputs.id = "initials-input";
     submit_form.append(submit_button);
-    submit_button.text("submit");
-    submit_button.attr("type","submit");
-    submit_form.submit(function(event){
-        console.log(initials_inputs.val());
-        saveScore(initials_inputs.val(),score);
+    submit_button.textContent = "submit";
+    submit_button.type = "submit";
+    submit_form.addEventListener("submit",function(event){
+        console.log(initials_inputs.value);
+        saveScore(initials_inputs.value,score);
+        alert();
         event.preventDefault();
-        after_container.css("display",none);
-        outer_container.css("display",show);
+        after_container.style.display = none;
+        outer_container.style.display = show;
     });
 
     //JQuery is much more convenient :(
     //scoreboard session
-    let scoreboard = $("#scoreboard-container");
-    scoreboard.css("display",none);
-    let scoreboard_table = $("<table/>");
-    let scoreboard_head = $("<thead/>");
-    let tr_head = $("<tr/>");
-    let th_score = $("<th/>");
-    let th_name = $("<th/>");
-    let th_rank = $("<th/>");
+    let scoreboard = document.querySelector("#scoreboard-container");
+    scoreboard.style.display = none;
+    let scoreboard_table = document.createElement("table");
+    let scoreboard_head = document.createElement("thead");
+    let tr_head = document.createElement("tr");
+    let th_score = document.createElement("th");
+    let th_name = document.createElement("th");
+    let th_rank = document.createElement("th");
     scoreboard.append(scoreboard_table);
-    scoreboard_table.attr("class","table table-dark table-striped");
-    // scoreboard_table.classList.add("table-dark");
-    // scoreboard_table.classList.add("table-striped");
+    scoreboard_table.classList.add("table");
+    scoreboard_table.classList.add("table-dark");
+    scoreboard_table.classList.add("table-striped");
     scoreboard_table.append(scoreboard_head);
     scoreboard_head.append(tr_head);
     tr_head.append(th_rank);
-    th_rank.text("Rank");
+    th_rank.textContent = "Rank";
     tr_head.append(th_name);
-    th_name.text("Name");
+    th_name.textContent = "Name";
     tr_head.append(th_score);
-    th_score.text("Score");
+    th_score.textContent = "Score";
 
 
 
@@ -307,39 +309,37 @@ window.onload = function(){
             var firstscore = {name:namestore,score:scorestore};
             localStorage.setItem("scores",JSON.stringify(firstscore));
         }
-        else{
         var storedScores = [];
         storedScores.push(JSON.parse(localStorage.getItem("scores")));
         storedScores.push(scores);
         localStorage.setItem("scores",JSON.stringify(storedScores));
-        console.log(JSON.stringify(localStorage.getItem("scores")));
-        }
+        console.log(localStorage.getItem("scores"));
     }
     // show the scoreboard
     function showScoreboard(){
         //show if localstorage not null
         if(localStorage.getItem("scores") !== null){
             scoreboard_status = true;
-            let scoreboard_body = $("<tbody/>");
+            let scoreboard_body = document.createElement("tbody");
             scoreboard_table.append(scoreboard_body);
             var scores =  JSON.parse(localStorage.getItem("scores"));
             for(i = 0; i< scores.length; i++){
                 const name = scores[i].name;
                 const score = scores[i].score;
-                let tr_data = $("<tr/>");
-                let td_rank = $("<td/>");
-                let td_name = $("<td/>");
-                let td_score = $("<td/>");
+                let tr_data = document.createElement("tr");
+                let td_rank = document.createElement("td");
+                let td_name = document.createElement("td");
+                let td_score = document.createElement("td");
                 scoreboard_body.append(tr_data);
                 tr_data.append(td_rank);
-                td_rank.text(i+1);
+                td_rank.textContent = i+1;
                 tr_data.append(td_name);
-                td_name.text(name);
+                td_name.textContent = name;
                 tr_data.append(td_score);
-                td_score.text(score);
+                td_score.textContent = score;
 
             }
-            scoreboard.css("display",show);
+            scoreboard.style.display = show;
         }
         else{
             alert("There no scores stored");
@@ -373,7 +373,7 @@ window.onload = function(){
 
     var answers = document.querySelectorAll(".answer");
     //Button click and quiz starts
-    button.click(function(){
+    button.addEventListener("click", function(){
 
         var quiz = setInterval(function(){
             if(counter === 60){
@@ -393,25 +393,25 @@ window.onload = function(){
                     event_lis_counter += 1;
                 }
 
-                scoreboard_link.css("display",none);
-                outer_container.css("display",none);
-                quiz_container.css("display",show);
+                scoreboard_link.style.display = none;
+                outer_container.style.display = none;
+                quiz_container.style.display = show;
             }
 
 
-            timer.text("Time: "+counter--);
+            timer.textContent="Time: "+counter--;
             console.log(question_counter);
             if(counter === -1 || (question_counter === 10 && last_question === true)){
                 alert("pass");
                 
-                quiz_container.css("display",none);
-                after_container.css("display",show);
-                scoreboard_link.css("display",show);
+                quiz_container.style.display = none;
+                after_container.style.display = show;
+                scoreboard_link.style.display = show;
                 clearInterval(quiz);
                 counter = 60;
                 question_counter = 0;
-                timer.text("Time: "+0);
-                over_p.text("Your Final score is "+score + " out of 10");
+                timer.textContent="Time: "+0;
+                over_p.textContent = "Your Final score is "+score + " out of 10";
             }
         },1000);
     }); 
